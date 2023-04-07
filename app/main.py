@@ -1,9 +1,9 @@
 from pathlib import Path
-from typing import List
+from typing import List, Literal
 
 import numpy as np
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, conint
 from joblib import load
 
 from app import config as cfg
@@ -11,12 +11,13 @@ from app import config as cfg
 app = FastAPI(title='Predecir retraso de vuelos')
 
 class Vuelo(BaseModel):
-    aerolinea: int
-    mes: int
-    tipo_vuelo: int
-    origen: int
-    destino: int
-    dia_semana: int
+	aerolinea: int
+	mes: conint(ge=1, le=12)
+	tipo_vuelo: int
+	origen: int
+	destino: int
+	dia_semana: int
+	temp_alta: Literal[0, 1]
 
 @app.on_event("startup")
 def load_clf():
@@ -31,11 +32,12 @@ def predict_delay(flights: List[Vuelo]):
 
 	flight_arr = np.array([[
 		v.aerolinea,
-    	v.mes,
+		v.mes,
 		v.tipo_vuelo,
 		v.origen,
 		v.destino,
-		v.dia_semana] for v in flights])
+		v.dia_semana,
+		v.temp_alta] for v in flights])
 	
 	pr = app.model.predict_proba(flight_arr)
 
