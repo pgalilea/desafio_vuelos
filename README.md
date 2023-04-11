@@ -23,7 +23,7 @@ docker run -d --name vuelos_api -p 8081:80 pred_vuelos
 ```
 
 ### Verificar ejecución
-En el navegador web, se puede acceder a la ruta http://127.0.0.1:8081/docs
+En el navegador web, se puede acceder a la ruta `http://127.0.0.1:8081/docs` </br>
 Expandir el endpoint "/predict-delay" y darle al botón "Try it out". Luego, completar el cuerpo de la consulta y darle a "execute".
 
 
@@ -90,7 +90,7 @@ Requests/sec:      0.00
 Transfer/sec:       0.00B
 ```
 
-El entorno de ejecución local no fue capaz de procesar todas las consultas requeridas por el test. Esto se podría corregir implementando un balanceador de cargas sobre múltiples réplicas del servicio. Por ejemplo, utilizando Kubernetes mediante una plataforma gestionada en la nube (GKE, AKS, etc).
+El entorno de ejecución local no fue capaz de procesar todas las consultas requeridas por el test. Esto se podría corregir implementando un balanceador de cargas sobre múltiples réplicas del servicio. Por ejemplo, utilizando Kubernetes en una plataforma gestionada en la nube (GKE, AKS, etc).
 
 Otra alternativa es utilizar un componente en la nube (e.g., Vertex AI) que permita implementar un pipeline para procesar los datos y entrenar el modelo. Para luego exponer el modelo a medida en un endpoint http, utilizando un servicio y sin tener que preocuparse del desarrollo de la API, a diferencia de como se hizo en este repositorio.
 
